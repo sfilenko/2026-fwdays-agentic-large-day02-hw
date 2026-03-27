@@ -1,0 +1,93 @@
+# Excalidraw — Cursor Rules (legacy format)
+# Generated from .cursor/rules/*.mdc
+
+# ─── ALWAYS APPLY ────────────────────────────────────────────────────────────
+
+## Protected Files
+# NEVER modify without explicit approval:
+# - packages/excalidraw/scene/renderer.ts   (render pipeline)
+# - packages/excalidraw/data/restore.ts     (file format compat)
+# - packages/excalidraw/actions/manager.ts  (action system)
+# - packages/excalidraw/types.ts            (core types)
+# Changes require: full dependency review + full test suite + manual QA.
+
+## Memory Bank
+# Keep docs/memory/ up to date after every meaningful change.
+# Required files: projectbrief.md, productContext.md, systemPatterns.md,
+#                 techContext.md, activeContext.md, progress.md
+# - After any code change   → update activeContext.md and progress.md
+# - After architecture decisions → update systemPatterns.md
+# - After dependency/tooling changes → update techContext.md
+# - After scope changes → update projectbrief.md and productContext.md
+
+# ─── ARCHITECTURE (packages/excalidraw/**) ────────────────────────────────────
+
+## State Management
+# - Use actionManager.dispatch() for all state updates — NOT Redux/Zustand/MobX
+# - State type is AppState (packages/excalidraw/types.ts)
+
+## Rendering
+# - Canvas 2D only — do NOT use react-konva, fabric.js, pixi.js, or React DOM for drawing
+# - Render pipeline: Scene → renderScene() → canvas context
+
+## Dependencies
+# - No new npm packages without explicit approval
+# - Check packages/utils/ before adding external helpers
+
+# ─── CODE CONVENTIONS (packages/**) ──────────────────────────────────────────
+
+## Components
+# - Functional components + hooks ONLY (no class components)
+# - Props interface named {ComponentName}Props
+# - Named exports only — NO default exports
+# - Colocated tests: ComponentName.test.tsx
+
+## TypeScript
+# - Strict mode — no `any`, no `@ts-ignore`
+# - Prefer `type` over `interface` for simple types
+# - Use `import type { X } from "..."` for type-only imports
+
+## Files
+# - kebab-case for utility files: element-utils.ts
+# - PascalCase for component files: LayerUI.tsx
+
+# ─── SECURITY ─────────────────────────────────────────────────────────────────
+
+# - Never use dangerouslySetInnerHTML — use React's safe rendering
+# - No eval(), new Function(), or dynamic code execution
+# - No hardcoded secrets, tokens, or API keys in source
+# - Sanitize all user-supplied input before rendering or processing
+# - All shared room data must use end-to-end encryption
+# - Never log or expose encryption keys or room IDs
+# - Use URL constructor for URL parsing — never string concatenation
+# - No new packages parsing SVG/HTML/binary without security review
+
+# ─── MODULE RULES ─────────────────────────────────────────────────────────────
+
+## excalidraw-app/
+# - App-level concerns only (routing, persistence, collaboration)
+# - Do not duplicate logic from packages/excalidraw — import it
+# - Firebase and Socket.io are confined to this package
+
+## packages/common/
+# - Shared utilities only — no UI, no canvas, no element logic
+# - Must NOT import from other @excalidraw/* packages (no circular imports)
+
+## packages/element/
+# - Element types are immutable — never mutate, always return new objects
+# - Use mutateElement() for controlled mutations within the package
+# - No rendering logic here — rendering belongs in packages/excalidraw
+
+## packages/excalidraw/
+# - Public API surface is index.tsx — do not expose internals
+# - Component props must be documented with JSDoc
+# - Must NOT import from excalidraw-app/ (dependency flows downward only)
+
+## packages/math/
+# - Pure functions only — no side effects, no external imports
+# - Always use the Point type from types.ts — never plain { x, y }
+# - Every function must have unit tests
+
+## packages/utils/
+# - General-purpose helpers — keep functions small and focused
+# - Prefer pure functions; avoid stateful utilities
