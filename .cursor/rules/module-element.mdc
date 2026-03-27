@@ -6,12 +6,22 @@ alwaysApply: false
 
 # Module: `packages/element`
 
-- Element types are immutable — never mutate, always return new objects
-- Use `mutateElement()` for controlled mutations inside the package
+- Element types are immutable for **external** use — never mutate them directly from outside this package
+- Internal, controlled mutations may only be performed via `mutateElement()` — this is the sole sanctioned mutation path inside the package; callers receive a new or updated element reference and must not bypass this contract
 - Do not add rendering logic here — rendering belongs in `packages/excalidraw`
 
 ## How to verify
 
-- `grep -r "\.x =\|\.y =\|\.width =\|\.height =" packages/element/` — direct mutations should not appear outside `mutateElement`
-- `grep -r "renderScene\|canvas\|ctx\." packages/element/` — should return nothing
-- `yarn test:app packages/element` — run element-specific tests
+```bash
+# Direct property assignments outside of mutateElement should not appear.
+# (Excludes files that define or call mutateElement itself.)
+grep -rn "\.x =\|\.y =\|\.width =\|\.height =" packages/element/src/ \
+  | grep -v "mutateElement"
+
+# No rendering code should exist in this package:
+grep -rn "renderScene\|canvas\b\|ctx\." packages/element/src/ \
+  | grep -v "__tests__\|\.test\."
+
+# Run element-specific tests:
+yarn test:app packages/element
+```

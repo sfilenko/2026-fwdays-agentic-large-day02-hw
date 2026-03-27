@@ -1,16 +1,30 @@
 ---
-description: "Rules for packages/utils — general-purpose helpers"
+description: "Rules for packages/utils — export helpers (exportToSvg, exportToBlob, etc.) and geometry utilities (isPointInShape, withinBounds); no element or excalidraw-core imports"
 globs: packages/utils/**/*.ts
 alwaysApply: false
 ---
 
 # Module: `packages/utils`
 
-- General-purpose helpers only — keep functions small and focused
+- **Scope**: export helpers (`exportToSvg`, `exportToBlob`, `exportToCanvas`) and geometry/shape utilities (`isPointInShape`, `withinBounds`); general-purpose helpers that do not belong to a more specific package
+- Keep functions small and focused — a single exported function should have one clear responsibility
 - Prefer pure functions; avoid stateful utilities
+- **Allowed dependencies**: `@excalidraw/common`, `@excalidraw/math`
+- **Forbidden dependencies**: do not import from `@excalidraw/element` or `@excalidraw/excalidraw` internals — if a type is needed, import it from `@excalidraw/common` or request it be moved there
 
 ## How to verify
 
-- `grep -r "let\|useState\|useRef" packages/utils/` — stateful patterns should be absent
-- Each exported function should have a single clear responsibility — review on code review
-- `yarn build:packages` — confirms no broken imports
+```bash
+# Forbidden imports from element or excalidraw internals should return nothing:
+grep -rn "@excalidraw/element\|@excalidraw/excalidraw" packages/utils/src/ \
+  | grep -v "import type.*\/types"
+
+# Stateful patterns should be absent:
+grep -rn "\blet\b\|useState\|useRef" packages/utils/src/
+
+# Confirm key exports exist:
+grep -rn "export function exportTo\|export.*isPointInShape\|export.*withinBounds" packages/utils/src/
+
+# Build must succeed:
+yarn build:packages
+```

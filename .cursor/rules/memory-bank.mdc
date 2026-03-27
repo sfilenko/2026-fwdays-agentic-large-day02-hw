@@ -1,6 +1,6 @@
 ---
-description: "Memory Bank pattern — keep project context docs up to date"
-globs: "**/*"
+description: "Memory Bank pattern — keep Excalidraw project context docs up to date"
+globs: "docs/**,packages/**/*.ts,packages/**/*.tsx,excalidraw-app/**/*.ts,excalidraw-app/**/*.tsx,.cursor/**"
 alwaysApply: true
 ---
 
@@ -22,6 +22,9 @@ The Memory Bank lives in `docs/memory/` and is the single source of truth for pr
 ## Update Rules
 
 - After **any code change**: update `activeContext.md` (current focus) and `progress.md` (what changed)
+- After **canvas rendering changes** (renderer.ts, interactiveScene.ts): update `systemPatterns.md` with the render pipeline impact
+- After **element type or immutability changes** (packages/element): update `systemPatterns.md` (element contract) and `techContext.md`
+- After **action system changes** (actions/manager.ts, actionManager.dispatch): update `systemPatterns.md` (state-management pattern)
 - After **architecture decisions**: update `systemPatterns.md`
 - After **dependency or tooling changes**: update `techContext.md`
 - After **scope changes**: update `projectbrief.md` and `productContext.md`
@@ -35,6 +38,8 @@ The Memory Bank lives in `docs/memory/` and is the single source of truth for pr
 
 ## How to verify
 
-- `ls docs/memory/` — all 6 required files must exist
-- Check each file is under 200 lines: `wc -l docs/memory/*.md`
-- `git diff docs/memory/` — confirm updates reflect actual changes made in the session
+```bash
+ls docs/memory/          # all 6 required files must exist
+wc -l docs/memory/*.md   # each file should be under 200 lines
+git diff docs/memory/    # confirm updates reflect actual changes made in the session
+```

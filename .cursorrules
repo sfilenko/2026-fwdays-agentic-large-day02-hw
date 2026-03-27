@@ -85,7 +85,7 @@
 
 ## packages/math/
 # - Pure functions only — no side effects, no external imports
-# - Always use the Point type from types.ts — never plain { x, y }
+# - Always use GlobalPoint or LocalPoint from types.ts — never plain { x, y }
 # - Every function must have unit tests
 
 ## packages/utils/

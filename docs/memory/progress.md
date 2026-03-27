@@ -1,6 +1,6 @@
 # Progress
 
-> Last updated: 2026-03-28 (session 10)
+> Last updated: 2026-03-28 (session 12)
 > Related: [activeContext.md](activeContext.md) | [decisionLog.md](decisionLog.md) | [PRD](../product/PRD.md) | [dev-setup](../technical/dev-setup.md)
 
 ## Completion snapshot
@@ -11,6 +11,30 @@ Status: On track
 ---
 
 ## Done
+
+**Rule accuracy pass (session 12)**
+- [x] `do-not-touch.mdc` — globs narrowed to 4 exact protected file paths
+- [x] `memory-bank.mdc` — globs scoped; Excalidraw-specific update triggers added
+- [x] `module-common.mdc` — rule corrected to match actual cross-package deps (verified in source)
+- [x] `module-element.mdc` — immutability contract clarified; grep checks tightened
+- [x] `module-math.mdc` — `Point` → `GlobalPoint`/`LocalPoint` (verified types.ts)
+- [x] `module-utils.mdc` — scope, deps, example exports, concrete verify commands added
+- [x] `testing.mdc.off` — deleted (dead duplicate of conventions.mdc)
+- [x] `code-review.md` — Excalidraw-specific section + checklist items added
+- [x] `codebase-explore/SKILL.md` — monorepo layout, render pipeline, element types, component table added
+- [x] `repomix-reference SKILL.md` — 3 unlabeled code fences fixed (`text`)
+- [x] `tech-stack.md` — trailing newline added
+- [x] `.cursorrules` — `Point` → `GlobalPoint or LocalPoint` corrected
+- [x] `AGENTS.md` — invalid `<CodeBlockWrapper>` removed; Tech Stack table, Conventions, Do-Not-Touch sections added; code block language tags fixed
+- [x] `.cursorrules` — generated from `.cursor/rules/*.mdc` (legacy Cursor format)
+
+**Rule validation**
+- [x] `docs/validation/ab-conventions-rule.md` — A/B test of `conventions.mdc`; finding: rule is aspirational for internal files, enforced only at public API boundary
+- [x] `docs/ABResult/comparison.md` — A/B test of `architecture.mdc` via "Create element coordinates component" prompt; rule proven effective at preventing wrong state management patterns
+- [x] `docs/ABResult/A/element-coordinates.tsx` — rule-compliant implementation (actionManager, named export, strict types)
+- [x] `docs/ABResult/B/element-coordinates.tsx` — rule-off implementation (useState, default export, any)
+- [x] `.cursor/commands/code-review.md` — Cursor `/code-review` command
+- [x] `.cursor/commands/create-component.md` — Cursor `/create-component` command
 
 **Agentic tooling**
 - [x] `.cursor/rules/` — 11 rules with "How to verify" sections (architecture, conventions, do-not-touch, memory-bank, security, 6 module-* rules)

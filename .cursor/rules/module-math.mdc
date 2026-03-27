@@ -6,12 +6,28 @@ alwaysApply: false
 
 # Module: `packages/math`
 
-- Pure functions only — no side effects, no external imports
-- Always use the `Point` type from `types.ts` — never plain `{ x, y }`
+- Pure functions only — no side effects, no external imports outside this package
+- Always use `GlobalPoint` or `LocalPoint` from `types.ts` — never plain `{ x, y }` objects
+  - `GlobalPoint` — coordinates in the scene/world space
+  - `LocalPoint` — coordinates local to an element
+  - The legacy `Point` type alias does not exist; use the specific typed variants
 - Functions must be unit-tested
 
 ## How to verify
 
-- `grep -r "^import" packages/math/src/ | grep -v "from.*math\|from.*types"` — no external imports
-- `grep -r "{ x:" packages/math/` — should use `Point` type, not plain objects
-- `yarn test:app packages/math` — all math functions must have passing tests
+```bash
+# No external imports (outside packages/math itself):
+grep -rn "^import" packages/math/src/ \
+  | grep -v "from \"@excalidraw/math\|from \"\./\|from \"\.\./"
+
+# No plain { x, y } object literals used as point types (excludes tests and pointFrom converters):
+grep -rn "{ x:" packages/math/src/ \
+  | grep -v "\.test\.\|pointFrom\|__mocks__"
+
+# Ensure no usage of the removed legacy Point type (GlobalPoint/LocalPoint should be used):
+grep -rn "\bPoint\b" packages/math/src/ \
+  | grep -v "GlobalPoint\|LocalPoint\|\.test\.\|Polygon<Point\|Curve<Point\|Ellipse<Point"
+
+# Run math unit tests:
+yarn test:app packages/math
+```

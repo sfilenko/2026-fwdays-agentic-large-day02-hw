@@ -1,16 +1,28 @@
 ---
-description: "Rules for packages/common — shared utilities with no upward imports"
+description: "Rules for packages/common — shared utilities; allowed upward imports are limited to @excalidraw/math and type-only imports from @excalidraw/element and @excalidraw/excalidraw"
 globs: packages/common/**/*.ts,packages/common/**/*.tsx
 alwaysApply: false
 ---
 
 # Module: `packages/common`
 
-- Shared utilities only — no UI, no canvas, no element logic
-- No circular imports — this package must not import from other `@excalidraw/*` packages
+- Shared utilities only — no UI rendering, no canvas, no element mutation logic
+- Allowed cross-package imports:
+  - `@excalidraw/math` — value and type imports permitted
+  - `@excalidraw/element/types` — **type-only** imports permitted
+  - `@excalidraw/excalidraw/types` — **type-only** imports permitted
+- All other upward imports are forbidden (e.g. importing from `packages/excalidraw` internals beyond `/types`)
+- No circular imports — `@excalidraw/common` must not be imported back into `@excalidraw/math`
 
 ## How to verify
 
-- `grep -r "@excalidraw/" packages/common/` — should return nothing
-- `grep -r "import.*react" packages/common/` — no UI/React imports expected
-- `yarn build:packages` — circular imports cause build failures
+```bash
+# Value imports from element or excalidraw (not type-only) should return nothing:
+grep -r "^import {" packages/common/src/ | grep -E "@excalidraw/(element|excalidraw)" | grep -v "import type"
+
+# Imports from packages other than math/element/excalidraw should return nothing:
+grep -r "@excalidraw/" packages/common/src/ | grep -v "@excalidraw/(math|element/types|excalidraw/types)"
+
+# Build must succeed with no circular-dependency errors:
+yarn build:packages
+```
