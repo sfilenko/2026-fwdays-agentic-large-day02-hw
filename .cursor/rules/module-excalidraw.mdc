@@ -1,0 +1,17 @@
+---
+description: "Rules for packages/excalidraw — the main npm-published component"
+globs: packages/excalidraw/**/*.ts,packages/excalidraw/**/*.tsx
+alwaysApply: false
+---
+
+# Module: `packages/excalidraw`
+
+- Public API surface is `index.tsx` — do not expose internals
+- Component props must be documented with JSDoc
+- Do not import from `excalidraw-app/` — dependency only flows downward
+
+## How to verify
+
+- `grep -r "from.*excalidraw-app" packages/excalidraw/` — should return nothing
+- Check `index.tsx` exports — only intentionally public symbols should be listed
+- `yarn build:packages` — type errors surface missing JSDoc or broken exports

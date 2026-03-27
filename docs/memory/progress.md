@@ -1,6 +1,6 @@
 # Progress
 
-> Last updated: 2026-03-26 (session 9)
+> Last updated: 2026-03-28 (session 10)
 > Related: [activeContext.md](activeContext.md) | [decisionLog.md](decisionLog.md) | [PRD](../product/PRD.md) | [dev-setup](../technical/dev-setup.md)
 
 ## Completion snapshot
@@ -11,6 +11,13 @@ Status: On track
 ---
 
 ## Done
+
+**Agentic tooling**
+- [x] `.cursor/rules/` — 11 rules with "How to verify" sections (architecture, conventions, do-not-touch, memory-bank, security, 6 module-* rules)
+- [x] `.cursor/skills/` — 4 skills (build-verify, codebase-explore, memory-bank-update, repomix-reference)
+- [x] `.claude/rules/` + `.claude/skills/` — mirrored from `.cursor/` for Claude Code auto-discovery
+- [x] `.agents/` — Cursor-compatible copies for homework/lecturer compatibility
+- [ ] `.cursor/rules/testing.mdc.off` — disabled; enable when test work begins
 
 **Memory Bank — core docs**
 - [x] `CLAUDE.md` — commands, monorepo structure, import rules, test thresholds, Memory Bank index; reference docs list updated with `decisionLog-archive.md`

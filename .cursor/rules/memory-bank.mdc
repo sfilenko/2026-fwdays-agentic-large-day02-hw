@@ -1,0 +1,40 @@
+---
+description: "Memory Bank pattern — keep project context docs up to date"
+globs: "**/*"
+alwaysApply: true
+---
+
+# Memory Bank
+
+The Memory Bank lives in `docs/memory/` and is the single source of truth for project context across sessions. It must be kept current after every meaningful change.
+
+## Required Files
+
+| File | Purpose |
+|------|---------|
+| `projectbrief.md` | Goals, scope, and non-goals |
+| `productContext.md` | Why the project exists, user problems it solves |
+| `systemPatterns.md` | Architecture decisions, recurring design patterns |
+| `techContext.md` | Stack, tooling, environment constraints |
+| `activeContext.md` | Current focus, recent decisions, next steps |
+| `progress.md` | What works, what doesn't, known issues |
+
+## Update Rules
+
+- After **any code change**: update `activeContext.md` (current focus) and `progress.md` (what changed)
+- After **architecture decisions**: update `systemPatterns.md`
+- After **dependency or tooling changes**: update `techContext.md`
+- After **scope changes**: update `projectbrief.md` and `productContext.md`
+
+## Workflow
+
+1. Read relevant Memory Bank files at the start of a session to restore context
+2. Make changes
+3. Update the affected Memory Bank files before finishing
+4. Keep entries concise — the Memory Bank is reference material, not a log
+
+## How to verify
+
+- `ls docs/memory/` — all 6 required files must exist
+- Check each file is under 200 lines: `wc -l docs/memory/*.md`
+- `git diff docs/memory/` — confirm updates reflect actual changes made in the session

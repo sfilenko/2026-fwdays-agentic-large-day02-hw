@@ -1,0 +1,17 @@
+---
+description: "Rules for packages/math — pure math utilities"
+globs: packages/math/**/*.ts
+alwaysApply: false
+---
+
+# Module: `packages/math`
+
+- Pure functions only — no side effects, no external imports
+- Always use the `Point` type from `types.ts` — never plain `{ x, y }`
+- Functions must be unit-tested
+
+## How to verify
+
+- `grep -r "^import" packages/math/src/ | grep -v "from.*math\|from.*types"` — no external imports
+- `grep -r "{ x:" packages/math/` — should use `Point` type, not plain objects
+- `yarn test:app packages/math` — all math functions must have passing tests

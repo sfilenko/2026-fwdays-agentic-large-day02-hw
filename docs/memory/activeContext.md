@@ -1,18 +1,20 @@
 # Active Context
 
-> Last updated: 2026-03-26 (session 9)
+> Last updated: 2026-03-28 (session 10)
 > Related: [progress.md](progress.md) | [decisionLog.md](decisionLog.md) | [PRD](../product/PRD.md) | [architecture](../technical/architecture.md) | [undocumented-behavior](../technical/undocumented-behavior.md)
 
 ## Current focus
 
-Workshop PR open; review follow-up fixes applied. Awaiting further review or implementation direction.
+Agentic tooling setup complete (rules + skills for Cursor, Claude Code, and `.agents/`). Awaiting first implementation task.
 
 ## What was just done
 
-Session 9 — doc precision fixes (proper noun capitalisation, feature-flag fact, progress placeholders). All findings verified against source before fixing.
+Session 10 — agentic tooling scaffolding:
 
-- `docs/memory/activeContext.md` — `markdown` → `Markdown` (proper noun); replaced broad feature-flag claim with source-verified statement referencing `packages/common/src/utils.ts:1282` (commit `37fa37f`)
-- `docs/memory/progress.md` — replaced `*(nothing actively in progress)*` and `*(nothing blocked)*` placeholders with timestamped factual entries (commit `37fa37f`)
+- `.cursor/rules/` — 11 rule files created: `architecture`, `conventions`, `do-not-touch`, `memory-bank`, `security`, `module-app`, `module-common`, `module-element`, `module-excalidraw`, `module-math`, `module-utils`. All include a **How to verify** section.
+- `.cursor/skills/` — 4 skills mirrored: `build-verify`, `codebase-explore`, `memory-bank-update`, `repomix-reference-*`
+- `.claude/rules/` and `.claude/skills/` — mirrored from `.cursor/` equivalents for Claude Code auto-discovery
+- `.agents/` — Cursor-style skill copies kept for homework/lecturer compatibility
 
 ## Active decisions
 
@@ -26,6 +28,7 @@ Session 9 — doc precision fixes (proper noun capitalisation, feature-flag fact
 
 - **Workshop PR** — open; review follow-up fixes applied (commit `90d52b7`); awaiting review outcome.
 - **Implementation work** — not yet started; awaiting direction after PR review.
+- **Agentic tooling** — rules and skills scaffolded; `.cursor/rules/testing.mdc.off` still disabled — enable when needed.
 
 ## Known issues & open questions
 

@@ -1,0 +1,16 @@
+---
+description: "Rules for packages/common — shared utilities with no upward imports"
+globs: packages/common/**/*.ts,packages/common/**/*.tsx
+alwaysApply: false
+---
+
+# Module: `packages/common`
+
+- Shared utilities only — no UI, no canvas, no element logic
+- No circular imports — this package must not import from other `@excalidraw/*` packages
+
+## How to verify
+
+- `grep -r "@excalidraw/" packages/common/` — should return nothing
+- `grep -r "import.*react" packages/common/` — no UI/React imports expected
+- `yarn build:packages` — circular imports cause build failures

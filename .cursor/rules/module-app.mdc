@@ -1,0 +1,16 @@
+---
+description: "Rules for excalidraw-app — the standalone web application"
+globs: excalidraw-app/**/*.ts,excalidraw-app/**/*.tsx
+alwaysApply: false
+---
+
+# Module: `excalidraw-app`
+
+- App-level concerns only (routing, persistence, collaboration)
+- Do not duplicate logic already in `packages/excalidraw` — import instead
+- Firebase and Socket.io usage is confined to this package
+
+## How to verify
+
+- `grep -r "firebase\|socket.io" packages/` — should return nothing (app-only)
+- `grep -r "from.*packages/excalidraw" excalidraw-app/` — imports must go through `@excalidraw/excalidraw`, not direct paths

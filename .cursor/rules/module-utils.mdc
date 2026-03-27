@@ -1,0 +1,16 @@
+---
+description: "Rules for packages/utils — general-purpose helpers"
+globs: packages/utils/**/*.ts
+alwaysApply: false
+---
+
+# Module: `packages/utils`
+
+- General-purpose helpers only — keep functions small and focused
+- Prefer pure functions; avoid stateful utilities
+
+## How to verify
+
+- `grep -r "let\|useState\|useRef" packages/utils/` — stateful patterns should be absent
+- Each exported function should have a single clear responsibility — review on code review
+- `yarn build:packages` — confirms no broken imports

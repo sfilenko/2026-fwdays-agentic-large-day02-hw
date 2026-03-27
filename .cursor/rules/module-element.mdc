@@ -1,0 +1,17 @@
+---
+description: "Rules for packages/element — element types and mutations"
+globs: packages/element/**/*.ts,packages/element/**/*.tsx
+alwaysApply: false
+---
+
+# Module: `packages/element`
+
+- Element types are immutable — never mutate, always return new objects
+- Use `mutateElement()` for controlled mutations inside the package
+- Do not add rendering logic here — rendering belongs in `packages/excalidraw`
+
+## How to verify
+
+- `grep -r "\.x =\|\.y =\|\.width =\|\.height =" packages/element/` — direct mutations should not appear outside `mutateElement`
+- `grep -r "renderScene\|canvas\|ctx\." packages/element/` — should return nothing
+- `yarn test:app packages/element` — run element-specific tests

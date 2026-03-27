@@ -1,0 +1,37 @@
+---
+description: "Security rules for Excalidraw — prevent common vulnerabilities"
+globs: packages/**/*.ts,packages/**/*.tsx,excalidraw-app/**/*.ts,excalidraw-app/**/*.tsx
+alwaysApply: false
+---
+
+# Security
+
+## Input Handling
+
+- Sanitize all user-supplied input before rendering or processing
+- Never use `dangerouslySetInnerHTML` — use React's safe rendering
+- Validate file content before restore/import (check `data/restore.ts`)
+
+## Collaboration & Encryption
+
+- All shared room data MUST use end-to-end encryption (see `excalidraw-app/data/`)
+- Never log or expose encryption keys or room IDs
+- Do not store sensitive data in localStorage without encryption
+
+## Dependencies
+
+- No new packages that handle untrusted input without security review
+- Audit any package that parses SVG, HTML, or binary formats
+
+## Code Patterns
+
+- No `eval()`, `new Function()`, or dynamic code execution
+- No hardcoded secrets, tokens, or API keys in source files
+- Use `URL` constructor for URL parsing — never string concatenation
+
+## How to verify
+
+- `grep -r "dangerouslySetInnerHTML" packages/ excalidraw-app/` — should return nothing
+- `grep -r "eval(\|new Function(" packages/ excalidraw-app/` — should return nothing
+- `grep -rE "(api_key|apiKey|secret|token)\s*=\s*[\"'][^\"']{8,}" packages/ excalidraw-app/` — no hardcoded secrets
+- `yarn test:code` — ESLint security rules catch common patterns
