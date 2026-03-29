@@ -69,3 +69,5 @@ Rule `architecture.mdc` is **effective**. With the rule active:
 Without the rule, the AI defaults to idiomatic React patterns (`useState`, default export, loose types) that are correct for a generic app but **broken in the Excalidraw context** — a coordinate edit would not be undoable and would not sync to remote users.
 
 The rule is not redundant: the violations in Result B are not obvious mistakes — they are reasonable defaults that happen to be wrong for this codebase.
+
+
